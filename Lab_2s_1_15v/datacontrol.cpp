@@ -229,6 +229,33 @@ void control::delCityIdx(int idx, char* const CITY_DATA)
 	return;
 }
 
+void control::delCityName(char* const name, char* const CITY_DATA)
+{
+	std::fstream file;
+	file.open(CITY_DATA, std::fstream::in | std::fstream::out | std::fstream::binary);
+
+	char temp[] = "";
+	control::City buffer(temp, temp, 0, 0);
+
+	while (!file.eof())
+	{
+		file.read((char*)&buffer, sizeof(buffer));
+		if (!file.good()) break;
+		//buffer.printInfo();
+		if (!strcmp(buffer.name, name))
+		{
+			buffer.showflag = false;
+			int size = static_cast<int>(sizeof(buffer));
+			file.seekg(-size, std::ios::cur);
+			file.write((char*)&buffer, sizeof(buffer));
+			std::cout << "City succesfully deleted.";
+			return;
+		}
+	}
+	std::cout << "City with such name doesn't exist.";
+	return;
+}
+
 void control::welcome_menu(char* const USER_DATA, char* const CITY_DATA)
 {
 	while (true)
@@ -346,7 +373,7 @@ void control::admin_menu(char* const USER_DATA, char* const CITY_DATA)
 			"Enter 1 to enter the main menu.\n" <<
 			"Enter 2 to add city.\n" <<
 			"Enter 3 to delete city after the index.\n" <<
-			"Enter 4 to delete city after the NAME.\n" <<
+			"Enter 4 to delete city after the name.\n" <<
 			"Enter any other symbol to end the session.\n";
 
 		int ans = 0;
@@ -375,6 +402,15 @@ void control::admin_menu(char* const USER_DATA, char* const CITY_DATA)
 			int index;
 			std::cin >> index;
 			delCityIdx(index, CITY_DATA);
+			continue;
+		}
+
+		else if (ans == 4)
+		{
+			std::cout << "Enter the NAME.\n";
+			char name[20];
+			std::cin >> name;
+			delCityName(name, CITY_DATA);
 			continue;
 		}
 

@@ -26,6 +26,7 @@ namespace control
 		City(char* const name, char* const type, long int population, 
 			long int coordinates, int idx = 1, bool showflag = true);
 	};
+
 	bool checkLoginInFile(control::User user, char* const USER_DATA, int& idx);
 	bool authentication(control::User user, char* const USER_DATA);
 	bool createAccount(control::User& user, char* const USER_DATA);
@@ -35,6 +36,7 @@ namespace control
 	void printCityCoord(long int population, char* const CITY_DATA);
 	void addCity(control::City& city, char* const CITY_DATA);
 	void delCityIdx(int idx, char* const CITY_DATA);
+	void delCityName(char* const name, char* const CITY_DATA);
 	void welcome_menu(char* const USER_DATA, char* const CITY_DATA);
 	void main_menu(char* const USER_DATA, char* const CITY_DATA);
 	void admin_menu(char* const USER_DATA, char* const CITY_DATA);

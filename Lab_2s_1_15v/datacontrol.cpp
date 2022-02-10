@@ -51,8 +51,8 @@ bool control::checkLoginInFile(control::User user, char* const USER_DATA, int& i
 		if (!out.good()) break;
 		//buffer.printInfo();
 		if (!strcmp(buffer.login, user.login)) return false;
-		else idx++;
 	}
+	idx = 1 + buffer.id;
 	out.close();
 	return true;
 }
@@ -123,8 +123,8 @@ bool control::city_exists(control::City city, char* const CITY_DATA, int& idx)
 		if (!out.good()) break;
 		buffer.printInfo();
 		if (!strcmp(buffer.name, city.name)) return true;
-		else idx++;
 	}
+	idx = 1 + buffer.idx;
 	out.close();
 	return false;
 };
@@ -374,12 +374,19 @@ void control::admin_menu(char* const USER_DATA, char* const CITY_DATA)
 			"Enter 2 to add city.\n" <<
 			"Enter 3 to delete city after the index.\n" <<
 			"Enter 4 to delete city after the name.\n" <<
+			"Enter 5 to print all cities.\n" <<
 			"Enter any other symbol to end the session.\n";
 
 		int ans = 0;
 		std::cin >> ans;
 
-		if (ans == 1)
+		switch (ans)
+		{
+		case Menu::ADD:
+			break;
+		}
+
+		if (ans == Menu::ADD)
 		{
 			main_menu(USER_DATA, CITY_DATA);
 			return;
@@ -411,6 +418,12 @@ void control::admin_menu(char* const USER_DATA, char* const CITY_DATA)
 			char name[20];
 			std::cin >> name;
 			delCityName(name, CITY_DATA);
+			continue;
+		}
+
+		else if (ans == 5)
+		{
+			control::printAllCities(CITY_DATA);
 			continue;
 		}
 

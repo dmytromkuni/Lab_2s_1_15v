@@ -161,6 +161,7 @@ void control::printCityPop(long int population, char* const CITY_DATA)
 		if (!out.good()) break;		
 		if (buffer.population >= population) buffer.printInfo();
 	}
+
 	out.close();
 	return;
 };
